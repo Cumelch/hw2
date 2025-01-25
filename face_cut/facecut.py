@@ -25,7 +25,7 @@ def handler(event, context):
         image = Image.open(f"/tmp/{photo_name}")
         cut_face = image.crop((left, top, right, bottom))
 
-        face_photo_name = f"{photo_name}_{random.randint(1000, 1000000)}.jpg"
+        face_photo_name = f"{photo_name[:-3]}_{random.randint(1000, 1000000)}.jpg"
         with BytesIO() as buffer:
             cut_face.save(buffer, format="JPEG")
             buffer.seek(0) 

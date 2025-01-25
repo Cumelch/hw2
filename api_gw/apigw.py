@@ -5,9 +5,9 @@ import os
 def handler(event, context):
     client = boto3.client("s3", aws_access_key_id=os.getenv("aws_access_key"), aws_secret_access_key=os.getenv("aws_secret_key"), region_name="ru-central1", endpoint_url="https://storage.yandexcloud.net")
     
-    query_params = event.get("queryStringParameters", {})
-    face = query_params.get("face", "")
-    photo = query_params.get("photo", "")
+    params = event.get("queryStringParameters", {})
+    face = params.get("face", "")
+    photo = params.get("photo", "")
     
     if face != "":
         try:
@@ -24,7 +24,7 @@ def handler(event, context):
             return {"statusCode": 500, "body": "Internal server error"}
     elif photo != "":
         try:
-            response = client.get_object(Bucket="vvot15-photos", Key=face)
+            response = client.get_object(Bucket="vvot15-photos", Key=photo)
             return {
                 "isBase64Encoded": True,
                 "statusCode": 200,
